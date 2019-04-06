@@ -1,0 +1,6 @@
+OPTIONS=color
+OPTIONS=hilite_pet
+OPTIONS=boulder:0
+OPTIONS=DECgraphics
+OPTIONS=!autopickup
+OPTIONS=name:Jav the Impaler
