@@ -1,5 +1,8 @@
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+	source /etc/profile.d/vte.sh
+fi
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/vasil024/.oh-my-zsh
+export ZSH=/home/u14498jv/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -36,11 +39,10 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git, history-substring-search)
+plugins=(history-substring-search)
 
 # User configuration
-export LVG_DIR=/Users/vasil024/tools/LVG/lvg2018lite/
-export PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/lindsay/Library/Python/2.7/bin/:/Users/vasil024/tools:/Users/vasil024/tools/MetaMap/public_mm/bin:$LVG_DIR/bin"
+export PATH=$PATH:/home/u14498jv/miniconda3/bin
 
 source $ZSH/oh-my-zsh.sh
 
@@ -54,9 +56,13 @@ bindkey -v
 export KEYTIMEOUT=1
 
 # PROMPT
-function subprompt { echo; echo '∴ ' }
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b'
+function subprompt { echo; echo '∇ ' }
 function set_prompt {
-PROMPT='%{$bg[red]%}%{$fg[black]%} %n %{$reset_color%}%{$bg[cyan]%}%{$fg[red]%}%{$reset_color%}%{$bg[cyan]%}%{$fg[black]%} $(pwd) %{$reset_color%}%{$fg[cyan]%}%{$reset_color%}%{$fg[cyan]%}$(subprompt)%{$reset_color%}'
+PROMPT='%{$bg[red]%}%{$fg[black]%} %n %{$reset_color%}%{$bg[cyan]%}%{$fg[black]%} $(pwd) %{$reset_color%}%{$fg[cyan]%}$(subprompt)%{$reset_color%}'
+RPROMPT='%{$fg[green]%}⎇  ${vcs_info_msg_0_} %{$reset_color%}'
 }
 
 autoload -U colors && colors
@@ -64,31 +70,18 @@ setopt promptsubst
 autoload add-zsh-hook
 add-zsh-hook precmd set_prompt
 
-# PYTHON VIRTUALENV
-export WORKON_HOME=$HOME/Envs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
-source /usr/local/bin/virtualenvwrapper.sh
-
-# Application specific environment variables.
-#export NLTK_DATA=/Volumes/BACKUPS/nltk_data/
-export TF_CPP_MIN_LOG_LEVEL=2
-
-# Aliases
-alias run_metamap16="metamap16 --silent --term_processing --ignore_word_order --show_cuis --XMLf1"
-#
-# added by Anaconda3 5.3.0 installer
-# >>> conda init >>>
+# >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(CONDA_REPORT_ERRORS=false '/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+__conda_setup="$('/home/u14498jv/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
-    \eval "$__conda_setup"
+    eval "$__conda_setup"
 else
-    if [ -f "/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/anaconda3/etc/profile.d/conda.sh"
-        CONDA_CHANGEPS1=false conda activate base
+    if [ -f "/home/u14498jv/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/u14498jv/miniconda3/etc/profile.d/conda.sh"
     else
-        \export PATH="/anaconda3/bin:$PATH"
+        export PATH="/home/u14498jv/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
-# <<< conda init <<<
+# <<< conda initialize <<<
+
